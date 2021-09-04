@@ -18,4 +18,9 @@ class CustomerService
         return $this->customerRepository->listAll();
     }
 
+    public function store($customer)
+    {
+        return $this->customerRepository->store($customer->all());
+    }
+
 }

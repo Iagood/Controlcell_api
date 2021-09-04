@@ -42,7 +42,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = $this->customerService->store($request->request);
+
+        return response()->json($response,201);
     }
 
     /**

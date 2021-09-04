@@ -22,4 +22,14 @@ class CustomerRepository
         }
         return $response;
     }
+
+    public function store($customer)
+    {
+        try {
+            $response =$this->customer->firstOrCreate($customer);
+        } catch (\Exception $exception) {
+            $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
+        return $response;
+    }
 }
