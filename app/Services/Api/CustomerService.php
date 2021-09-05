@@ -23,4 +23,23 @@ class CustomerService
         return $this->customerRepository->store($customer->all());
     }
 
+    public function update($request, $id)
+    {
+        $customer = $this->getById($id);
+
+        if (!$customer) {
+            return json_encode(['error' => true, 'message' => null]);
+        }
+        else if (isset(json_decode($customer)->error)) {
+            return $customer;
+        }
+
+        return $this->customerRepository->update($request->all(), $customer);
+    }
+
+    public function getById($id)
+    {
+        return $this->customerRepository->getById($id);
+    }
+
 }

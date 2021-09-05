@@ -43,6 +43,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $response = $this->customerService->store($request->request);
+        if (isset(json_decode($response)->error)) {
+            return response()->json($response,500);
+        }
 
         return response()->json($response,201);
     }
@@ -78,7 +81,15 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = $this->customerService->update($request->request, $id);
+
+        if (json_decode($response)->message === null) {
+            return response()->json('Register not found!',404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response()->json($response,500);
+        }
+        return response()->json($response,201);
     }
 
     /**
