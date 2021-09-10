@@ -27,6 +27,9 @@ class CustomerRepository
     {
         try {
             $response = $this->customer->find($id);
+            if(!$response) {
+                $response = json_encode(['error' => true, 'message' => null]);
+            }
         } catch (\Exception $exception) {
             $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
         }

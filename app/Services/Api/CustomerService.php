@@ -27,10 +27,7 @@ class CustomerService
     {
         $customer = $this->getById($id);
 
-        if (!$customer) {
-            return json_encode(['error' => true, 'message' => null]);
-        }
-        else if (isset(json_decode($customer)->error)) {
+        if (isset(json_decode($customer)->error)) {
             return $customer;
         }
 

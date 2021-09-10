@@ -16,20 +16,23 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('cpf')->nullable()->unique();
-            $table->string('rg')->nullable()->unique();
-            $table->string('cnpj')->nullable()->unique();
+            $table->bigInteger('cpf')->nullable()->unique();
+            $table->bigInteger('rg')->nullable()->unique();
+            $table->bigInteger('cnpj')->nullable()->unique();
             $table->string('email')->nullable()->unique();
-            $table->string('cellphone');
-            $table->string('telephone')->nullable();
-            $table->string('cep');
-            $table->string('uf');
+            $table->integer('ddd_cellphone');
+            $table->bigInteger('cellphone');
+            $table->integer('ddd_telephone')->nullable();
+            $table->bigInteger('telephone')->nullable();
+            $table->integer('cep');
+            $table->char('uf',2);
             $table->string('public_place');
             $table->string('city');
             $table->string('county');
             $table->string('complement')->nullable();
-            $table->string('comments')->nullable();
+            $table->text('comments')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

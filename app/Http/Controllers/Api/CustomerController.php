@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Services\Api\CustomerService;
+use App\Http\Requests\StoreUpdateCustomerFormRequest;
 
 class CustomerController extends Controller
 {
@@ -40,7 +40,7 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCustomerFormRequest $request)
     {
         $response = $this->customerService->store($request->request);
         if (isset(json_decode($response)->error)) {
@@ -79,12 +79,12 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateCustomerFormRequest $request, $id)
     {
         $response = $this->customerService->update($request->request, $id);
 
         if (json_decode($response)->message === null) {
-            return response()->json('Register not found!',404);
+            return response()->json(['error'=>true, 'message' =>'Register not found!'],404);
         }
         else if (isset(json_decode($response)->error)) {
             return response()->json($response,500);
