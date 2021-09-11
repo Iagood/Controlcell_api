@@ -21,9 +21,9 @@ class CreateCustomersTable extends Migration
             $table->bigInteger('cnpj')->nullable()->unique();
             $table->string('email')->nullable()->unique();
             $table->integer('ddd_cellphone');
-            $table->bigInteger('cellphone');
+            $table->string('cellphone');
             $table->integer('ddd_telephone')->nullable();
-            $table->bigInteger('telephone')->nullable();
+            $table->string('telephone')->nullable();
             $table->integer('cep');
             $table->char('uf',2);
             $table->string('public_place');
