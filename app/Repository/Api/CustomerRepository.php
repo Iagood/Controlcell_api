@@ -27,9 +27,8 @@ class CustomerRepository
     {
         try {
             $response = $this->customer->find($id);
-            if(!$response) {
-                $response = json_encode(['error' => true, 'message' => null]);
-            }
+            if(!$response) 
+                $response = json_encode(['error' => true, 'message' => 'Register not found!']);
         } catch (\Exception $exception) {
             $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
         }

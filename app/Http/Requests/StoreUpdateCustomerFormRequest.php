@@ -24,12 +24,12 @@ class StoreUpdateCustomerFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => "required|unique:customers,name,{$this->id},id|max:150|string",
-            'cpf' => "unique:customers,cpf,{$this->id},id|min:11|max:11",
-            'rg' => "unique:customers,rg,{$this->id},id|min:8|max:8",
-            'cnpj' => "unique:customers,cnpj,{$this->id},id|min:14|max:14",
-            'email' => "unique:customers,email,{$this->id},id|min:10|max:100|email",
-            'cellphone' => "required|unique:customers,cellphone,{$this->id},id|min:9|max:9",
+            'name' => "required|unique:customers,name,{$this->segment(3)},id|max:150|string",
+            'cpf' => "unique:customers,cpf,{$this->segment(3)},id|min:11|max:11",
+            'rg' => "unique:customers,rg,{$this->segment(3)},id|min:8|max:8",
+            'cnpj' => "unique:customers,cnpj,{$this->segment(3)},id|min:14|max:14",
+            'email' => "unique:customers,email,{$this->segment(3)},id|min:10|max:100|email",
+            'cellphone' => "required|unique:customers,cellphone,{$this->segment(3)},id|min:9|max:9",
             'telephone' => 'min:8|max:8',
             'cep' => 'required|min:8|max:8',
             'uf' => 'required|min:2|max:2|string',

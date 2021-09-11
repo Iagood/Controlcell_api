@@ -21,7 +21,7 @@ class CustomerController extends Controller
     {
         $response = $this->customerService->listAll();
         
-        return response()->json($response);
+        return response($response);
     }
 
     /**
@@ -43,11 +43,11 @@ class CustomerController extends Controller
     public function store(StoreUpdateCustomerFormRequest $request)
     {
         $response = $this->customerService->store($request->request);
-        
-        if (isset(json_decode($response)->error)) {
-            return response()->json($response,500);
-        }
-        return response()->json($response,201);
+
+        if (isset(json_decode($response)->error))
+            return response($response,500);
+
+        return response($response,201);
     }
 
     /**
@@ -58,7 +58,15 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $response = $this->customerService->getById($id);
+
+        if (isset(json_decode($response)->message) && json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response($response,500);
+        }
+        return response($response,201);
     }
 
     /**
@@ -83,13 +91,13 @@ class CustomerController extends Controller
     {
         $response = $this->customerService->update($request->request, $id);
 
-        if (json_decode($response)->message === null) {
-            return response()->json(['error'=>true, 'message' =>'Register not found!'],404);
+        if (json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
         }
         else if (isset(json_decode($response)->error)) {
-            return response()->json($response,500);
+            return response($response,500);
         }
-        return response()->json($response,201);
+        return response($response,201);
     }
 
     /**
@@ -102,12 +110,12 @@ class CustomerController extends Controller
     {
         $response = $this->customerService->destroy($id);
 
-        if (json_decode($response)->message === null) {
-            return response()->json(['error'=>true, 'message' =>'Register not found!'],404);
+        if (json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
         }
         else if (isset(json_decode($response)->error)) {
-            return response()->json($response,500);
+            return response($response,500);
         }
-        return response()->json($response,201);
+        return response($response,201);
     }
 }

@@ -32,9 +32,9 @@ class CustomerService
     {
         $customer = $this->getById($id);
 
-        if (isset(json_decode($customer)->error)) {
+        if (isset(json_decode($customer)->error))
             return $customer;
-        }
+
         return $this->customerRepository->update($request->all(), $customer);
     }
 
@@ -42,9 +42,9 @@ class CustomerService
     {
         $customer = $this->getById($id);
 
-        if (isset(json_decode($customer)->error)) {
+        if (isset(json_decode($customer)->error))
             return $customer;
-        }
+
         return $this->customerRepository->destroy($customer);
     }
 }
