@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('customers', [CustomerController::class, 'index'])->name('customers');
-Route::post('customers', [CustomerController::class,'store'])->name('storeCustomers');
-Route::put('customers/{id}', [CustomerController::class,'update'])->name('updateCustomers');
+Route::get('customers', [CustomerController::class, 'index']);
+Route::post('customers', [CustomerController::class,'store']);
+Route::put('customers/{id}', [CustomerController::class,'update']);
+Route::delete('customers/{id}', [CustomerController::class,'destroy']);

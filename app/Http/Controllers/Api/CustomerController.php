@@ -43,10 +43,10 @@ class CustomerController extends Controller
     public function store(StoreUpdateCustomerFormRequest $request)
     {
         $response = $this->customerService->store($request->request);
+        
         if (isset(json_decode($response)->error)) {
             return response()->json($response,500);
         }
-
         return response()->json($response,201);
     }
 
@@ -100,6 +100,14 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->customerService->destroy($id);
+
+        if (json_decode($response)->message === null) {
+            return response()->json(['error'=>true, 'message' =>'Register not found!'],404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response()->json($response,500);
+        }
+        return response()->json($response,201);
     }
 }

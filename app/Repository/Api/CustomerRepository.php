@@ -57,4 +57,15 @@ class CustomerRepository
         }
         return $response;
     }
+
+    public function destroy($customer)
+    {
+        try {
+            $customer->delete();
+            $response = json_encode(['success' => true, 'message' => 'Record deleted successfully!']);
+        } catch (\Exception $exception) {
+            $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
+        return $response;
+    }
 }

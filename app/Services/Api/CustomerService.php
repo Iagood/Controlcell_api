@@ -18,6 +18,11 @@ class CustomerService
         return $this->customerRepository->listAll();
     }
 
+    public function getById($id)
+    {
+        return $this->customerRepository->getById($id);
+    }
+
     public function store($customer)
     {
         return $this->customerRepository->store($customer->all());
@@ -30,13 +35,16 @@ class CustomerService
         if (isset(json_decode($customer)->error)) {
             return $customer;
         }
-
         return $this->customerRepository->update($request->all(), $customer);
     }
 
-    public function getById($id)
+    public function destroy($id)
     {
-        return $this->customerRepository->getById($id);
-    }
+        $customer = $this->getById($id);
 
+        if (isset(json_decode($customer)->error)) {
+            return $customer;
+        }
+        return $this->customerRepository->destroy($customer);
+    }
 }
