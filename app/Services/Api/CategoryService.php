@@ -18,4 +18,9 @@ class CategoryService
         return $this->categoryRepository->listAll();
     }
 
+    public function store($category)
+    {
+        return $this->categoryRepository->store($category->all());
+    }
+
 }

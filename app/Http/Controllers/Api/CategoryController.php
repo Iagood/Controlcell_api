@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Controller;
 use App\Services\Api\CategoryService;
+use App\Http\Requests\StoreUpdateCategoryFormRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -20,6 +21,9 @@ class CategoryController extends Controller
     public function index()
     {
         $response = $this->categoryService->listAll();
+
+        if (isset(json_decode($response)->error))
+            return response($response,500);
         
         return response($response,500);
     }
@@ -40,9 +44,14 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCategoryFormRequest $request)
     {
-        //
+        $response = $this->categoryService->store($request->request);
+
+        if (isset(json_decode($response)->error))
+            return response($response,500);
+
+        return response($response,201);
     }
 
     /**
