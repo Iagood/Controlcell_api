@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\Controller;
 use App\Services\Api\CategoryService;
 use App\Http\Requests\StoreUpdateCategoryFormRequest;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -62,7 +61,15 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $response = $this->categoryService->getById($id);
+
+        if (isset(json_decode($response)->message) && json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response($response,500);
+        }
+        return response($response,201);
     }
 
     /**
@@ -83,9 +90,17 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateCategoryFormRequest $request, $id)
     {
-        //
+        $response = $this->categoryService->update($request->request, $id);
+
+        if (json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response($response,500);
+        }
+        return response($response,201);
     }
 
     /**
@@ -96,6 +111,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->categoryService->destroy($id);
+
+        if (json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response($response,500);
+        }
+        return response($response,201);
     }
 }
