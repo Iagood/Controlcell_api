@@ -25,7 +25,7 @@ class CustomerController extends Controller
         if (isset(json_decode($response)->error))
             return response($response,500);
 
-        return response($response);
+        return response($response,200);
     }
 
     /**
@@ -70,7 +70,7 @@ class CustomerController extends Controller
         else if (isset(json_decode($response)->error)) {
             return response($response,500);
         }
-        return response($response,201);
+        return response($response,200);
     }
 
     /**
@@ -101,7 +101,7 @@ class CustomerController extends Controller
         else if (isset(json_decode($response)->error)) {
             return response($response,500);
         }
-        return response($response,201);
+        return response($response,200);
     }
 
     /**
@@ -120,6 +120,6 @@ class CustomerController extends Controller
         else if (isset(json_decode($response)->error)) {
             return response($response,500);
         }
-        return response($response,201);
+        return response($response,200);
     }
 }
