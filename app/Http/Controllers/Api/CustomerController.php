@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreUpdateCustomerFormRequest;
 use App\Services\Api\CustomerService;
 
-class CustomerController extends UsefulController
+class CustomerController extends CrudController
 {
     function __construct(CustomerService $customerService)
     {
@@ -17,39 +16,25 @@ class CustomerController extends UsefulController
         return $this->customerService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUpdateCustomerFormRequest $request)
+    protected function getFormRequest($request, $id)
     {
-        $response = $this->getService()->store($request->request);
-
-        if (isset(json_decode($response)->error))
-            return response($response,500);
-
-        return response($response,201);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreUpdateCustomerFormRequest $request, $id)
-    {
-        $response = $this->getService()->update($request->request, $id);
-
-        if (json_decode($response)->message === 'Register not found!') {
-            return response($response,404);
-        }
-        else if (isset(json_decode($response)->error)) {
-            return response($response,500);
-        }
-        return response($response,200);
+        $request->validate([
+            'name' => "required|unique:customers,name,{$id},id|max:150|string",
+            'cpf' => "unique:customers,cpf,{$id},id|cpf",
+            'rg' => "unique:customers,rg,{$id},id|digits:10|numeric",
+            'cnpj' => "unique:customers,cnpj,{$id},id|cnpj",
+            'email' => "unique:customers,email,{$id},id|min:10|max:100|email",
+            'ddd_cellphone' => 'required|digits:2|numeric',
+            'cellphone' => "required|unique:customers,cellphone,{$id},id|celular",
+            'ddd_telephone' => 'digits:2|numeric',
+            'telephone' => 'telefone',
+            'cep' => 'required|numeric|digits:8',
+            'uf' => 'required|uf',
+            'public_place' => 'required|max:100|string',
+            'city' => 'required|string|max:50',
+            'county' => 'required|string|max:50',
+            'complement' => 'string|max:50',
+            'comments' => 'string|max:150'
+        ]);
     }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-abstract class UsefulController extends Controller
+use Illuminate\Http\Request;
+
+abstract class CrudController extends Controller
 {
     abstract protected function getService();
+
+    abstract protected function getFormRequest(object $request, $id);
 
     /**
      * Display a listing of the resource.
@@ -17,7 +21,7 @@ abstract class UsefulController extends Controller
 
         if (isset(json_decode($response)->error))
             return response($response,500);
-
+        
         return response($response,200);
     }
 
@@ -29,6 +33,23 @@ abstract class UsefulController extends Controller
     public function create()
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->getFormRequest($request, $id = null);
+        $response = $this->getService()->store($request->request);
+
+        if (isset(json_decode($response)->error))
+            return response($response,500);
+
+        return response($response,201);
     }
 
     /**
@@ -59,6 +80,27 @@ abstract class UsefulController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->getFormRequest($request, $id);
+        $response = $this->getService()->update($request->request, $id);
+
+        if (json_decode($response)->message === 'Register not found!') {
+            return response($response,404);
+        }
+        else if (isset(json_decode($response)->error)) {
+            return response($response,500);
+        }
+        return response($response,200);
     }
 
     /**
