@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-
-abstract class CrudController extends Controller
+abstract class UsefulController extends Controller
 {
     abstract protected function getService();
-
-    abstract protected function getFormRequest();
 
     /**
      * Display a listing of the resource.
@@ -33,22 +29,6 @@ abstract class CrudController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $response = $this->getService()->store($request->request);
-
-        if (isset(json_decode($response)->error))
-            return response($response,500);
-
-        return response($response,201);
     }
 
     /**
@@ -79,26 +59,6 @@ abstract class CrudController extends Controller
     public function edit($id)
     {
         //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $response = $this->getService()->update($request->request, $id);
-
-        if (json_decode($response)->message === 'Register not found!') {
-            return response($response,404);
-        }
-        else if (isset(json_decode($response)->error)) {
-            return response($response,500);
-        }
-        return response($response,200);
     }
 
     /**
