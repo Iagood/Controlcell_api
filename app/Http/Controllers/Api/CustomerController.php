@@ -2,124 +2,39 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\Controller;
 use App\Services\Api\CustomerService;
-use App\Http\Requests\StoreUpdateCustomerFormRequest;
 
-class CustomerController extends Controller
+class CustomerController extends CrudController
 {
     function __construct(CustomerService $customerService)
     {
         $this->customerService = $customerService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected function getService()
     {
-        $response = $this->customerService->listAll();
-
-        if (isset(json_decode($response)->error))
-            return response($response,500);
-
-        return response($response,200);
+        return $this->customerService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    protected function getFormRequest($request, $id)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUpdateCustomerFormRequest $request)
-    {
-        $response = $this->customerService->store($request->request);
-
-        if (isset(json_decode($response)->error))
-            return response($response,500);
-
-        return response($response,201);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $response = $this->customerService->getById($id);
-
-        if (isset(json_decode($response)->message) && json_decode($response)->message === 'Register not found!') {
-            return response($response,404);
-        }
-        else if (isset(json_decode($response)->error)) {
-            return response($response,500);
-        }
-        return response($response,200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreUpdateCustomerFormRequest $request, $id)
-    {
-        $response = $this->customerService->update($request->request, $id);
-
-        if (json_decode($response)->message === 'Register not found!') {
-            return response($response,404);
-        }
-        else if (isset(json_decode($response)->error)) {
-            return response($response,500);
-        }
-        return response($response,200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $response = $this->customerService->destroy($id);
-
-        if (json_decode($response)->message === 'Register not found!') {
-            return response($response,404);
-        }
-        else if (isset(json_decode($response)->error)) {
-            return response($response,500);
-        }
-        return response($response,200);
+        $request->validate([
+            'name' => "required|unique:customers,name,{$id},id|max:150|string",
+            'cpf' => "unique:customers,cpf,{$id},id|cpf",
+            'rg' => "unique:customers,rg,{$id},id|digits:10|numeric",
+            'cnpj' => "unique:customers,cnpj,{$id},id|cnpj",
+            'email' => "unique:customers,email,{$id},id|min:10|max:100|email",
+            'ddd_cellphone' => 'required|digits:2|numeric',
+            'cellphone' => "required|unique:customers,cellphone,{$id},id|celular",
+            'ddd_telephone' => 'digits:2|numeric',
+            'telephone' => 'telefone',
+            'cep' => 'required|numeric|digits:8',
+            'uf' => 'required|uf',
+            'public_place' => 'required|max:100|string',
+            'city' => 'required|string|max:50',
+            'county' => 'required|string|max:50',
+            'complement' => 'string|max:50',
+            'comments' => 'string|max:150'
+        ]);
     }
 }
