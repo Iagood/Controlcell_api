@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\Controller;
 use App\Services\Api\CustomerService;
 use App\Http\Requests\StoreUpdateCustomerFormRequest;
 
@@ -20,7 +21,10 @@ class CustomerController extends Controller
     public function index()
     {
         $response = $this->customerService->listAll();
-        
+
+        if (isset(json_decode($response)->error))
+            return response($response,500);
+
         return response($response,200);
     }
 
