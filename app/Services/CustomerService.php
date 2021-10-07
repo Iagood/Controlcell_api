@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Api;
+namespace App\Services;
 
-use App\Repository\Api\CustomerRepository;
+use App\Repository\CustomerRepository;
 
 class CustomerService
 {

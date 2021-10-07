@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\Api\CategoryService;
+use App\Services\CategoryService;
 
 class CategoryController extends CrudController
 {

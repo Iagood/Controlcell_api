@@ -58,7 +58,7 @@ abstract class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $response = $this->getService()->getById($id);
 
@@ -89,7 +89,7 @@ abstract class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $this->getFormRequest($request, $id);
         $response = $this->getService()->update($request->request, $id);
@@ -109,7 +109,7 @@ abstract class CrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $response = $this->getService()->destroy($id);
 
