@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\Api\CustomerService;
+use App\Services\CustomerService;
 
 class CustomerController extends CrudController
 {

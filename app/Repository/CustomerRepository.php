@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Repository\Api;
+namespace App\Repository;
 
-use App\Models\Category;
+use App\Models\Customer;
 
-class CategoryRepository
+class CustomerRepository
 {
-    private $category;
+    private $customer;
 
-    public function __construct(Category $category)
+    public function __construct(Customer $customer)
     {
-        $this->category = $category;
+        $this->customer = $customer;
     }
 
     public function listAll()
     {
         try {
-            $response = $this->category->get();
+            $response = $this->customer->get();
         } catch (\Exception $exception) {
             $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
         }
@@ -26,7 +26,7 @@ class CategoryRepository
     public function getById($id)
     {
         try {
-            $response = $this->category->find($id);
+            $response = $this->customer->find($id);
             if(!$response) 
                 $response = json_encode(['error' => true, 'message' => 'Register not found!']);
         } catch (\Exception $exception) {
@@ -35,10 +35,10 @@ class CategoryRepository
         return $response;
     }
 
-    public function store($category)
+    public function store($customer)
     {
         try {
-            $this->category->firstOrCreate($category);
+            $this->customer->firstOrCreate($customer);
             $response = json_encode(['success' => true, 'message' => 'Record entered successfully!']);
         } catch (\Exception $exception) {
             $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
@@ -46,10 +46,10 @@ class CategoryRepository
         return $response;
     }
 
-    public function update($request, $category)
+    public function update($request, $customer)
     {
         try {
-            $category->update($request);
+            $customer->update($request);
             $response = json_encode(['success' => true, 'message' => 'Record updated successfully!']);
         } catch (\Exception $exception) {
             $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
@@ -57,15 +57,14 @@ class CategoryRepository
         return $response;
     }
 
-    public function destroy($category)
+    public function destroy($customer)
     {
         try {
-            $category->delete();
+            $customer->delete();
             $response = json_encode(['success' => true, 'message' => 'Record deleted successfully!']);
         } catch (\Exception $exception) {
             $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
         }
         return $response;
     }
-
 }
