@@ -29,25 +29,25 @@ class BaseRepository implements RepositoryInterface
         return $this->entity->where($column, $value)->get();
     }
 
-    public function findWhreFirst($column, $value)
+    public function findWhereFirst($column, $value)
     {
         return $this->entity->where($column, $value)->first();
     }
 
     public function paginate($totalPage = 10)
     {
-        return $this->enity->paginate($totalPage);
+        return $this->entity->paginate($totalPage);
     }
 
     public function store(array $data)
     {
-        return $this->enity->create($data);
+        return $this->entity->create($data);
     }
 
     public function update(int $id, array $data)
     {
-        $enity = $this->findById($id);
-        return $enity->update($data);
+        $entity = $this->findById($id);
+        return $entity->update($data);
     }
 
     public function destroy(int $id)
