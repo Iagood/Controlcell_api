@@ -18,4 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::resources([
     'customers' => CustomerController::class,
     'categories' => CategoryController::class,
+    'products' => ProductController::class,
 ]);
