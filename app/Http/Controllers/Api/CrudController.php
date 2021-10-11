@@ -17,7 +17,7 @@ abstract class CrudController extends Controller
      */
     public function index()
     {
-        $response = $this->getService()->listAll();
+        $response = $this->getService()->getAll();
 
         if (isset(json_decode($response)->error))
             return response($response,500);
