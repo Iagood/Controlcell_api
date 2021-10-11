@@ -4,28 +4,30 @@ namespace App\Providers;
 
 use App\Repository\Contracts\CustomerRepositoryInterface;
 use App\Repository\Core\CustomerRepository;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-
+        $this->app->bind(
+            CustomerRepositoryInterface::class,
+            CustomerRepository::class
+        );
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
+        //
     }
 }

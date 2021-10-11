@@ -16,43 +16,80 @@ class BaseRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->enity->get();
+        try {
+            return $this->entity->get();
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
     }
 
     public function findById(int $id)
     {
-        return $this->enity->find($id);
+        try {
+            $response = $this->entity->find($id);
+            if(!$response) 
+                $response = json_encode(['error' => true, 'message' => 'Register not found!']);
+        } catch (\Exception $exception) {
+            $response = json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
+        return $response;
     }
 
     public function findWhere($column, $value)
     {
-        return $this->entity->where($column, $value)->get();
+        try {
+            return $this->entity->where($column, $value)->get();
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
     }
 
     public function findWhereFirst($column, $value)
     {
-        return $this->entity->where($column, $value)->first();
+        try {
+            return $this->entity->where($column, $value)->first();
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
     }
 
     public function paginate($totalPage = 10)
     {
-        return $this->entity->paginate($totalPage);
+        try {
+            return $this->entity->paginate($totalPage);
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
     }
 
     public function store(array $data)
     {
-        return $this->entity->create($data);
+        try {
+            $this->entity->firstOrCreate($data);
+            return json_encode(['success' => true, 'message' => 'Record entered successfully!']);
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
     }
 
-    public function update(int $id, array $data)
+    public function update(object $entity, array $data)
     {
-        $entity = $this->findById($id);
-        return $entity->update($data);
+        try {
+            $entity->update($data);
+            return json_encode(['success' => true, 'message' => 'Record updated successfully!']);
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
     }
 
-    public function destroy(int $id)
+    public function destroy(object $entity)
     {
-        return $this->findById($id)->delete();
+        try {
+            $entity->delete();
+            return json_encode(['success' => true, 'message' => 'Record deleted successfully!']);
+        } catch (\Exception $exception) {
+            return json_encode(['error' => true, 'message' => $exception->getMessage()]);
+        }
 
     }
 

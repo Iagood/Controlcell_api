@@ -60,7 +60,7 @@ abstract class CrudController extends Controller
      */
     public function show(int $id)
     {
-        $response = $this->getService()->getById($id);
+        $response = $this->getService()->findById($id);
 
         if (isset(json_decode($response)->message) && json_decode($response)->message === 'Register not found!') {
             return response($response,404);

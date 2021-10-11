@@ -16,7 +16,7 @@ interface RepositoryInterface
 
     public function store(array $data);
 
-    public function update(int $id, array $data);
+    public function update(object $entity, array $data);
 
-    public function destroy(int $id);
+    public function destroy(object $entity);
 }

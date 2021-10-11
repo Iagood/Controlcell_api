@@ -18,17 +18,17 @@ class CategoryService
         return $this->categoryRepository->listAll();
     }
 
-    public function getById($id)
+    public function getById(int $id)
     {
         return $this->categoryRepository->getById($id);
     }
 
-    public function store($category)
+    public function store(object $category)
     {
         return $this->categoryRepository->store($category->all());
     }
 
-    public function update($request, $id)
+    public function update(object $request, $id)
     {
         $category = $this->getById($id);
 
@@ -38,7 +38,7 @@ class CategoryService
         return $this->categoryRepository->update($request->all(), $category);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $category = $this->getById($id);
 
