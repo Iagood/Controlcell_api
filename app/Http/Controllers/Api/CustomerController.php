@@ -16,7 +16,7 @@ class CustomerController extends CrudController
         return $this->customerService;
     }
 
-    protected function getFormRequest($request, $id)
+    protected function getFormRequest(object $request, $id)
     {
         $request->validate([
             'name' => "required|unique:customers,name,{$id},id|max:150|string",
