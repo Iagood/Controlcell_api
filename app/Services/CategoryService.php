@@ -2,50 +2,50 @@
 
 namespace App\Services;
 
-use App\Repository\CategoryRepository;
+use App\Repository\Contracts\CategoryRepositoryInterface;
 
 class CategoryService
 {
-    private $categoryRepository;
+    private $repository;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryRepositoryInterface $repository)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->repository = $repository;
     }
 
-    public function listAll()
+    public function getAll()
     {
-        return $this->categoryRepository->listAll();
+        return $this->repository->getAll();
     }
 
-    public function getById($id)
+    public function findById(int $id)
     {
-        return $this->categoryRepository->getById($id);
+        return $this->repository->findById($id);
     }
 
-    public function store($category)
+    public function store(object $category)
     {
-        return $this->categoryRepository->store($category->all());
+        return $this->repository->store($category->all());
     }
 
-    public function update($request, $id)
+    public function update(object $request, $id)
     {
         $category = $this->getById($id);
 
-        if (isset(json_decode($category)->error))
+        if (isset($category['error']))
             return $category;
 
-        return $this->categoryRepository->update($request->all(), $category);
+        return $this->repository->update($request->all(), $category);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $category = $this->getById($id);
 
-        if (isset(json_decode($category)->error))
+        if (isset($category['error']))
             return $category;
 
-        return $this->categoryRepository->destroy($category);
+        return $this->repository->destroy($category);
     }
 
 }

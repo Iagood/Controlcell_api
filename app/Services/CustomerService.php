@@ -2,49 +2,49 @@
 
 namespace App\Services;
 
-use App\Repository\CustomerRepository;
+use App\Repository\Contracts\CustomerRepositoryInterface;
 
 class CustomerService
 {
-    private $customerRepository;
+    private $repository;
 
-    public function __construct(CustomerRepository $customerRepository)
+    public function __construct(CustomerRepositoryInterface $repository)
     {
-        $this->customerRepository = $customerRepository;
+        $this->repository = $repository;
     }
 
-    public function listAll()
+    public function getAll()
     {
-        return $this->customerRepository->listAll();
+        return $this->repository->getAll();
     }
 
-    public function getById($id)
+    public function findById(int $id)
     {
-        return $this->customerRepository->getById($id);
+        return $this->repository->findById($id);
     }
 
-    public function store($customer)
+    public function store(object $customer)
     {
-        return $this->customerRepository->store($customer->all());
+        return $this->repository->store($customer->all());
     }
 
-    public function update($request, $id)
+    public function update(object $request, int $id)
     {
-        $customer = $this->getById($id);
+        $customer = $this->findById($id);
 
-        if (isset(json_decode($customer)->error))
+        if (isset($customer['error']))
             return $customer;
 
-        return $this->customerRepository->update($request->all(), $customer);
+        return $this->repository->update($customer, $request->all());
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        $customer = $this->getById($id);
+        $customer = $this->findById($id);
 
-        if (isset(json_decode($customer)->error))
+        if (isset($customer['error']))
             return $customer;
 
-        return $this->customerRepository->destroy($customer);
+        return $this->repository->destroy($customer);
     }
 }
