@@ -16,7 +16,7 @@ class CategoryController extends CrudController
         return $this->categoryService;
     }
 
-    protected function getFormRequest($request, $id)
+    protected function getFormRequest(object $request, $id)
     {
         $request->validate([
             'name' => "required|unique:categories,name,{$id},id|max:100|string"
