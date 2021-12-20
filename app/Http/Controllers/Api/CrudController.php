@@ -8,8 +8,6 @@ abstract class CrudController extends Controller
 {
     abstract protected function getService();
 
-    abstract protected function getFormRequest(object $request, $id);
-
     public function index()
     {
         $response = $this->getService()->getAll();
@@ -27,7 +25,6 @@ abstract class CrudController extends Controller
 
     public function store(Request $request)
     {
-        $this->getFormRequest($request, $id = null);
         $response = $this->getService()->store($request->request);
 
         if (isset($response['error']))
@@ -56,7 +53,6 @@ abstract class CrudController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $this->getFormRequest($request, $id);
         $response = $this->getService()->update($request->request, $id);
 
         if ($response['message'] === 'Register not found!') {

@@ -22,16 +22,16 @@ Route::group(['middleware' => ['apiJWT']], function (){
 
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class,'index']);
-        Route::post('/', [CustomerController::class,'store']);
-        Route::put('/{id}', [CustomerController::class,'update']);
+        Route::post('/', [CustomerController::class,'beforeStore']);
+        Route::put('/{id}', [CustomerController::class,'beforeUpdate']);
         Route::delete('/{id}', [CustomerController::class,'destroy']);
         Route::get('/{id}', [CustomerController::class,'show']);
     });
     
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class,'index']);
-        Route::post('/', [CategoryController::class,'store']);
-        Route::put('/{id}', [CategoryController::class,'update']);
+        Route::post('/', [CategoryController::class,'beforeStore']);
+        Route::put('/{id}', [CategoryController::class,'beforeUpdate']);
         Route::delete('/{id}', [CategoryController::class,'destroy']);
         Route::get('/{id}', [CategoryController::class,'show']);
     });
