@@ -28,19 +28,19 @@ class CategoryService
         return $this->repository->store($category->all());
     }
 
-    public function update(object $request, $id)
+    public function update(object $request, int $id)
     {
-        $category = $this->getById($id);
+        $category = $this->findById($id);
 
         if (isset($category['error']))
             return $category;
 
-        return $this->repository->update($request->all(), $category);
+        return $this->repository->update($category, $request->all());
     }
 
     public function destroy(int $id)
     {
-        $category = $this->getById($id);
+        $category = $this->findById($id);
 
         if (isset($category['error']))
             return $category;

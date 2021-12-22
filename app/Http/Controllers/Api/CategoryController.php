@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\StoreUpdateCategoryFormRequest;
 use App\Services\CategoryService;
 
 class CategoryController extends CrudController
@@ -16,10 +17,16 @@ class CategoryController extends CrudController
         return $this->categoryService;
     }
 
-    protected function getFormRequest(object $request, $id)
+    protected function beforeStore(StoreUpdateCategoryFormRequest $request)
     {
-        $request->validate([
-            'name' => "required|unique:categories,name,{$id},id|max:100|string"
-        ]);
+        $request->validated();
+        return $this->store($request);
     }
+
+    protected function beforeUpdate(StoreUpdateCategoryFormRequest $request, $id)
+    {
+        $request->validated();
+        return $this->update($request, $id);
+    }
+
 }
