@@ -6,21 +6,18 @@ use Illuminate\Http\Request;
 
 abstract class CrudController extends Controller
 {
+    private $totalPage = 10;
+
     abstract protected function getService();
 
     public function index()
     {
-        $response = $this->getService()->getAll();
+        $response = $this->getService()->paginate($this->totalPage);
 
         if (isset($response['error']))
             return response()->json($response,500);
         
         return response($response,200);
-    }
-
-    public function create()
-    {
-        //
     }
 
     public function store(Request $request)
@@ -44,11 +41,6 @@ abstract class CrudController extends Controller
             return response()->json($response,500);
         }
         return response($response,200);
-    }
-
-    public function edit($id)
-    {
-        //
     }
 
     public function update(Request $request, int $id)

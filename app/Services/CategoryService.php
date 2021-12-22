@@ -18,6 +18,11 @@ class CategoryService
         return $this->repository->getAll();
     }
 
+    public function paginate($totalPage)
+    {
+        return $this->repository->paginate($totalPage);
+    }
+
     public function findById(int $id)
     {
         return $this->repository->findById($id);

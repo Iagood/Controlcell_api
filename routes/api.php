@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,14 @@ Route::group(['middleware' => ['apiJWT']], function (){
         Route::put('/{id}', [CategoryController::class,'beforeUpdate']);
         Route::delete('/{id}', [CategoryController::class,'destroy']);
         Route::get('/{id}', [CategoryController::class,'show']);
+    });
+
+    Route::prefix('products')->group(function () {
+        Route::get('/', [ProductController::class,'index']);
+        Route::post('/', [ProductController::class,'beforeStore']);
+        Route::put('/{id}', [ProductController::class,'beforeUpdate']);
+        Route::delete('/{id}', [ProductController::class,'destroy']);
+        Route::get('/{id}', [ProductController::class,'show']);
     });
 });
 

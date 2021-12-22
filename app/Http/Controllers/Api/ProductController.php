@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdateProductFormRequest;
+use App\Services\ProductService;
 
 class ProductController extends CrudController
 {
@@ -16,8 +17,15 @@ class ProductController extends CrudController
         return $this->productService;
     }
 
-    protected function getFormRequest($request, $id)
+    protected function beforeStore(StoreUpdateProductFormRequest $request)
     {
+        $request->validated();
+        return $this->store($request);
+    }
 
+    protected function beforeUpdate(StoreUpdateProductFormRequest $request, $id)
+    {
+        $request->validated();
+        return $this->update($request, $id);
     }
 }

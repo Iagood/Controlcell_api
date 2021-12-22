@@ -12,7 +12,7 @@ interface RepositoryInterface
 
     public function findWhereFirst($column, $value);
 
-    public function paginate($totalPage = 10);
+    public function paginate($totalPage);
 
     public function store(array $data);
 

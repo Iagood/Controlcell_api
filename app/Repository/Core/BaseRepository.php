@@ -53,7 +53,7 @@ class BaseRepository implements RepositoryInterface
         }
     }
 
-    public function paginate($totalPage = 10)
+    public function paginate($totalPage)
     {
         try {
             return $this->entity->paginate($totalPage);

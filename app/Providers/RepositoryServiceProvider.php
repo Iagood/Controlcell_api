@@ -6,6 +6,8 @@ use App\Repository\Contracts\CustomerRepositoryInterface;
 use App\Repository\Core\CustomerRepository;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 use App\Repository\Core\CategoryRepository;
+use App\Repository\Contracts\ProductRepositoryInterface;
+use App\Repository\Core\ProductRepository;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CategoryRepositoryInterface::class,
             CategoryRepository::class
+        );
+        $this->app->bind(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
         );
     }
 
