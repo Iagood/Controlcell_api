@@ -33,7 +33,7 @@ class StoreUpdateProductFormRequest extends FormRequest
             'guarantee_months' => 'required|digits:2|numeric',
             'observation' => 'string|max:150',
             'commission' => 'required|numeric',
-            'image' => 'string',
+            'image' => 'image',
             'minimum_inventory' => 'required|numeric',
             'current_inventory' => 'required|numeric'
         ];
