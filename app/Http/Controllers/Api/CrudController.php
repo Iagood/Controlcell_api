@@ -18,11 +18,6 @@ abstract class CrudController extends Controller
         return response($response,200);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $response = $this->getService()->store($request->request);
@@ -44,11 +39,6 @@ abstract class CrudController extends Controller
             return response()->json($response,500);
         }
         return response($response,200);
-    }
-
-    public function edit($id)
-    {
-        //
     }
 
     public function update(Request $request, int $id)

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
 
-Route::group(['middleware' => ['apiJWT']], function (){
+// Route::group(['middleware' => ['apiJWT']], function (){
 
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class,'index']);
@@ -35,7 +35,7 @@ Route::group(['middleware' => ['apiJWT']], function (){
         Route::delete('/{id}', [CategoryController::class,'destroy']);
         Route::get('/{id}', [CategoryController::class,'show']);
     });
-});
+// });
 
 
 
